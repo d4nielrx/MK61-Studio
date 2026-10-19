@@ -13,10 +13,10 @@
     "pack": "electron-builder --dir"
   },
   "author": {
-    "name": "MK61 Studio",
-    "email": "mk61studio@users.noreply.github.com"
+    "name": "d4nielrx",
+    "email": "d4nielrx@users.noreply.github.com"
   },
-  "homepage": "https://github.com/mk61-studio/mk61-studio",
+  "homepage": "https://github.com/d4nielrx/MK61-Studio",
   "license": "MIT",
   "devDependencies": {
     "electron": "^44.7.2",

@@ -1,5 +1,7 @@
 # MK61 Studio
 
+[![Build](https://github.com/d4nielrx/MK61-Studio/actions/workflows/build.yml/badge.svg)](https://github.com/d4nielrx/MK61-Studio/actions/workflows/build.yml)
+
 Open-source configuration software for the **Gamakay MK61 / SK61L** mechanical keyboard.
 
 Customise your keyboard without the official Gamakay app:
