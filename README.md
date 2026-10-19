@@ -4,7 +4,7 @@
 
 Open-source configuration software for the **Gamakay MK61 / SK61L** mechanical keyboard.
 
-Customise your keyboard without the official Gamakay app:
+Customise your keyboard without the official Gamakay app: runs on all OS mac,windows linux
 
 | Feature | What it does |
 |---|---|
