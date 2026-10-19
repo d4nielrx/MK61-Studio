@@ -17,6 +17,10 @@
     "email": "d4nielrx@users.noreply.github.com"
   },
   "homepage": "https://github.com/d4nielrx/MK61-Studio",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/d4nielrx/MK61-Studio.git"
+  },
   "license": "MIT",
   "devDependencies": {
     "electron": "^44.7.2",
