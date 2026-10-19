@@ -42,3 +42,36 @@ jobs:
             dist/*.deb
             dist/*.blockmap
           if-no-files-found: ignore
+
+  # Collect every platform's artifacts into one GitHub Release, so the
+  # installers are downloadable from the repo's Releases page.
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+          merge-multiple: true
+      - name: Publish release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: MK61 Studio ${{ github.ref_name }}
+          body: |
+            Open configuration software for the Gamakay MK61 (SK61L).
+
+            * `*-Setup-*.exe` — Windows installer
+            * `*-Portable-*.exe` — Windows, no install
+            * `*.dmg` — macOS (Apple Silicon / Intel)
+            * `*.AppImage` — Linux, runs anywhere
+            * `*.deb` — Debian / Ubuntu
+          files: |
+            artifacts/*.exe
+            artifacts/*.dmg
+            artifacts/*.AppImage
+            artifacts/*.deb
+            artifacts/*.zip
+            artifacts/*.blockmap
+          fail_on_unmatched_files: false
