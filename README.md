@@ -33,21 +33,10 @@ installation, just run it.
 > the app is unsigned. Click **More info → Run anyway**.
 
 ### macOS
-macOS installers must be built on a Mac (Apple Silicon also requires code signing,
-which is macOS-only tooling). The project includes a one-command build script.
+Download the `.dmg` from the [Releases page](https://github.com/d4nielrx/MK61-Studio/releases) and open it, then drag the app into **Applications**.
 
-1. Copy **`MK61-Studio-source.zip`** to the Mac and unzip it.
-2. Open Terminal, `cd` into the unzipped `app` folder.
-3. Install [Node.js 20+](https://nodejs.org) if you haven't already, then run:
-
-   ```bash
-   chmod +x build-mac.sh
-   ./build-mac.sh
-   ```
-
-4. The installers appear in `app/dist/`:
-   - **`MK61 Studio-1.0.0-arm64.dmg`** — Apple Silicon (M1/M2/M3/M4)
-   - **`MK61 Studio-1.0.0-x64.dmg`** — Intel5. Open the `.dmg` and drag **MK61 Studio** into **Applications**.
+- **`MK61 Studio-1.0.0-arm64.dmg`** — Apple Silicon (M1/M2/M3/M4)
+- **`MK61 Studio-1.0.0-x64.dmg`** — Intel
 
 The app is unsigned, so macOS Gatekeeper blocks it on first launch. To allow it:
 
@@ -57,11 +46,17 @@ xattr -cr /Applications/MK61\ Studio.app
 
 (or right-click the app → **Open** → confirm **Open**).
 
-> Prefer to have someone else build it? The same script works on any Mac — hand
-> over the source zip and the one command above.
+> **Building the Mac installers yourself?** macOS `.dmg` files can only be built
+> on a Mac (Apple Silicon also needs macOS-only signing tooling). Copy
+> **`MK61-Studio-source.zip`** to the Mac, unzip it, open Terminal in the `app`
+> folder, and run:
 >
-> Alternatively, push a `v*` tag to GitHub and the included workflow
-> (`.github/workflows/build.yml`) builds both Windows and macOS installers for you.
+> ```bash
+> chmod +x build-mac.sh
+> ./build-mac.sh
+> ```
+>
+> That also builds the Linux `.AppImage` and `.deb`.
 
 ---
 

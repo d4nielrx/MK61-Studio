@@ -15,7 +15,7 @@ jobs:
             target: --win --x64
             artifact: mk61-studio-windows
           - os: macos-latest
-            target: --mac
+            target: --mac --x64 --arm64
             artifact: mk61-studio-macos
           - os: ubuntu-latest
             target: --linux --x64
