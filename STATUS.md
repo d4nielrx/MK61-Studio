@@ -21,11 +21,25 @@
 - GOTCHA: pushing a workflow file needs the `workflow` OAuth scope -
   `gh auth refresh -h github.com -s workflow` (device-code flow) adds it.
 - CI (GitHub Actions) builds win+mac+linux and attaches them to the release.
-  On this account the runs sat "queued" forever because Actions had never been
-  activated at the ACCOUNT level (the other repo has 0 runs) - fix in
-  Settings -> Actions -> General -> "Enable actions", and/or
+- CI DEBUGGING TRAIL (3 failed runs -> 1 fix each; the run takes ~6-15 min, so
+  rehearse locally before re-tagging):
+  1. "The `npm ci` command can only install with an existing package-lock.json"
+     -> the workflow ran npm ci at the REPO ROOT, but the app lives in app/.
+     Fix: `defaults: run: working-directory: app` + artifact paths app/dist/*.
+  2. npm ci: "lock file's mk61-studio@0.1.0 does not satisfy mk61-studio@1.0.0"
+     -> package.json was bumped to 1.0.0 after the lock file was generated.
+     Fix: `npm install --package-lock-only` and commit the lock file.
+  3. "Cannot detect repository by .git/config. Please specify repository in the
+     package.json" -> electron-builder could not auto-detect the repo URL in CI.
+     Fix: explicit "repository" field in app/package.json.
+  4. Local rehearsal that avoids burning a 15-minute CI cycle: copy app/ (minus
+     node_modules/dist) to a temp dir with NO git repo, run `npm ci` +
+     `npx electron-builder --win --x64 --dir` there.
+- Actions had never been activated on this account (0 runs on the other repo) and
+  the first runs sat "queued" for ~15 minutes before starting. If that happens
+  again: Settings -> Actions -> General -> "Enable actions", and
   Settings -> Billing and licensing (spending limit / payment method).
-  Until then, the Mac build script produces the macOS + Linux installers.
+- Until then, the Mac build script produces the macOS + Linux installers.
 
 ## SESSION 8 — PACKAGING (Windows + macOS installers)
 
