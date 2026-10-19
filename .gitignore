@@ -1,0 +1,19 @@
+# --- dependencies / build output ---
+node_modules/
+app/dist/
+dist/
+*.log
+__pycache__/
+
+# --- generated source bundle (regenerate with the zip command in README) ---
+MK61-Studio-source.zip
+
+# --- third-party / vendor material (NOT redistributable, kept out of git) ---
+# The official Gamakay app and its installer, used only for protocol research.
+re/official_asar/
+re/official_extracted/
+re/official_sw/
+re/mk61_official.zip
+re/gearhub_index.js
+re/innoextract/
+re/innoextract.zip

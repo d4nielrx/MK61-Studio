@@ -1,0 +1,109 @@
+{
+  "name": "mk61-studio",
+  "version": "1.0.0",
+  "description": "Open configuration software for the Gamakay MK61 (SK61L) - remapping, RGB, macros, profiles",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "postinstall": "node scripts/patch-electron-builder.js",
+    "dist": "electron-builder",
+    "dist:win": "electron-builder --win --x64 --ia32",
+    "dist:mac": "electron-builder --mac",
+    "dist:linux": "electron-builder --linux AppImage deb",
+    "pack": "electron-builder --dir"
+  },
+  "author": {
+    "name": "MK61 Studio",
+    "email": "mk61studio@users.noreply.github.com"
+  },
+  "homepage": "https://github.com/mk61-studio/mk61-studio",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^44.7.2",
+    "electron-builder": "^26.0.12"
+  },
+  "dependencies": {
+    "node-hid": "^3.4.0"
+  },
+  "build": {
+    "appId": "com.mk61studio.app",
+    "productName": "MK61 Studio",
+    "copyright": "MK61 Studio",
+    "directories": {
+      "output": "dist",
+      "buildResources": "build"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "renderer/**/*",
+      "package.json"
+    ],
+    "asarUnpack": [
+      "**/node_modules/node-hid/**",
+      "**/node_modules/pkg-prebuilds/**"
+    ],
+    "npmRebuild": false,
+    "win": {
+      "target": [
+        "nsis",
+        "portable"
+      ],
+      "icon": "build/icon.png"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "MK61 Studio",
+      "artifactName": "${productName}-Setup-${version}.${ext}"
+    },
+    "portable": {
+      "artifactName": "${productName}-Portable-${version}.${ext}"
+    },
+    "mac": {
+      "target": [
+        "dmg",
+        "zip"
+      ],
+      "icon": "build/icon.png",
+      "category": "public.app-category.utilities",
+      "artifactName": "${productName}-${version}-${arch}.${ext}",
+      "darkModeSupport": true
+    },
+    "dmg": {
+      "title": "MK61 Studio ${version}",
+      "icon": "build/icon.png",
+      "contents": [
+        { "x": 140, "y": 200, "type": "file" },
+        { "x": 400, "y": 200, "type": "link", "path": "/Applications" }
+      ]
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ],
+      "icon": "build/icon.png",
+      "category": "Utility",
+      "synopsis": "Configuration software for the Gamakay MK61 (SK61L) keyboard",
+      "description": "Remapping, RGB lighting, macros and profiles for the Gamakay MK61 (SK61L). Settings are written to the keyboard's flash memory and survive reboots.",
+      "executableName": "mk61-studio",
+      "artifactName": "${productName}-${version}-${arch}.${ext}"
+    },
+    "deb": {
+      "afterInstall": "build/linux/after-install.sh",
+      "depends": [
+        "libgtk-3-0",
+        "libnotify4",
+        "libnss3",
+        "libxss1",
+        "libxtst6",
+        "xdg-utils",
+        "libatspi2.0-0"
+      ]
+    }
+  }
+}

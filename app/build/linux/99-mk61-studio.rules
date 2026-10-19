@@ -1,0 +1,4 @@
+# Gamakay MK61 / SK61L configuration interface (vendor collection FF01:0001)
+# Grants access to the logged-in user without root.
+# Install:  sudo cp 99-mk61-studio.rules /etc/udev/rules.d/ && sudo udevadm control --reload-rules
+SUBSYSTEM=="hidraw", ATTRS{idVendor}=="1ea7", ATTRS{idProduct}=="9018", MODE="0660", TAG+="uaccess"

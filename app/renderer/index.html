@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; script-src 'self'" />
+  <title>MK61 Studio</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <aside>
+    <div class="logo">MK61<span>Studio</span></div>
+    <nav>
+      <button class="nav-btn active" data-tab="remap">Key Remap</button>
+      <button class="nav-btn" data-tab="lighting">RGB Lighting</button>
+      <button class="nav-btn" data-tab="macros">Macros</button>
+      <button class="nav-btn" data-tab="tester">Key Tester</button>
+      <button class="nav-btn" data-tab="settings">Settings</button>
+    </nav>
+    <div class="device-card">
+      <div class="device-row"><span class="dot" id="connDot"></span><span id="connText">Not connected</span></div>
+      <div class="device-sub" id="connSub">Gamakay MK61 (SK61L)</div>
+      <button id="connectBtn" class="primary">Connect keyboard</button>
+    </div>
+    <div class="sidebar-foot">open-source · v<span id="appVersion">?</span></div>
+  </aside>
+
+  <main>
+    <header>
+      <div class="profile-tabs" id="profileTabs">
+        <button class="ptab active" data-profile="0">Profile 1</button>
+        <button class="ptab" data-profile="1">Profile 2</button>
+        <button class="ptab" data-profile="2">Profile 3</button>
+        <button class="ptab" data-profile="3">Profile 4</button>
+      </div>
+      <div class="header-right">
+        <span id="dirtyFlag" class="dirty" hidden>● unsaved changes on keyboard</span>
+        <button id="applyBtn" class="primary" disabled>Apply to keyboard</button>
+      </div>
+    </header>
+
+    <!-- ============ REMAP ============ -->
+    <section id="tab-remap" class="tab">
+      <div class="tab-head">
+        <h2>Key Remap</h2>
+        <div class="layer-toggle">
+          <button class="layer-btn active" data-layer="normal">Normal layer</button>
+          <button class="layer-btn" data-layer="fn">FN layer</button>
+        </div>
+      </div>
+      <div class="remap-body">
+        <div class="kb-wrap">
+          <div id="keyboard" class="keyboard"></div>
+          <p class="hint">Click a key to change what it does. Changes apply when you press <b>Apply to keyboard</b>.</p>
+        </div>
+        <div class="palette">
+          <div class="palette-current" id="paletteCurrent">Select a key…</div>
+          <div class="palette-actions">
+            <button id="captureBtn">Press a key to assign…</button>
+            <button id="clearKeyBtn">Disable key</button>
+            <button id="resetKeyBtn">Reset this key</button>
+          </div>
+          <div id="paletteGroups" class="palette-groups"></div>
+          <div class="palette-macro">
+            <h3>Bind a macro / combo</h3>
+            <div id="bindingList" class="binding-list"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ LIGHTING ============ -->
+    <section id="tab-lighting" class="tab" hidden>
+      <div class="tab-head"><h2>RGB Lighting</h2></div>
+      <div class="panel">
+        <div class="field">
+          <label>Effect</label>
+          <select id="fxEffect"></select>
+        </div>
+        <div class="field">
+          <label>Brightness <span id="fxBrightVal"></span></label>
+          <input type="range" id="fxBrightness" min="0" max="20" />
+        </div>
+        <div class="field">
+          <label>Direction <span id="fxDirVal"></span></label>
+          <input type="range" id="fxDirection" min="0" max="3" />
+        </div>
+        <div class="field">
+          <label>Speed <span id="fxSpeedVal"></span></label>
+          <input type="range" id="fxSpeed" min="0" max="100" />
+        </div>
+        <div class="field">
+          <label>Colors <span class="sub" id="fxColorsHint"></span></label>
+          <div id="fxColors" class="color-row"></div>
+        </div>
+        <div class="field-row">
+          <button id="fxApplyBtn" class="primary">Apply lighting</button>
+          <button id="fxDefaultBtn">Reset to default lighting</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ MACROS ============ -->
+    <section id="tab-macros" class="tab" hidden>
+      <div class="tab-head">
+        <h2>Macros</h2>
+        <button id="macroNewBtn" class="primary">＋ New macro</button>
+      </div>
+      <div class="macro-body">
+        <div class="macro-list-wrap">
+          <div id="macroList" class="macro-list"></div>
+        </div>
+        <div class="macro-editor" id="macroEditor" hidden>
+          <div class="field">
+            <label>Name</label>
+            <input type="text" id="macroName" maxlength="32" />
+          </div>
+          <div class="field">
+            <label>Repeat count <span class="sub">1 = once, 0 = until pressed again</span></label>
+            <input type="number" id="macroRepeat" min="0" max="65535" value="1" />
+          </div>
+          <div class="field">
+            <label>Steps</label>
+            <div class="field-row">
+              <button id="macroRecBtn" class="rec">● Record</button>
+              <button id="macroStepClearBtn">Clear steps</button>
+            </div>
+            <div id="macroSteps" class="macro-steps"></div>
+          </div>
+          <div class="field-row">
+            <button id="macroBindBtn">Bind to key…</button>
+            <button id="macroDeleteBtn" class="danger">Delete macro</button>
+          </div>
+          <p class="hint" id="macroBindHint"></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ TESTER ============ -->
+    <section id="tab-tester" class="tab" hidden>
+      <div class="tab-head">
+        <h2>Key Tester</h2>
+        <label class="switch-label"><input type="checkbox" id="testerToggle" /> Test keys on this page</label>
+      </div>
+      <div class="panel">
+        <div id="testerKeyboard" class="keyboard tester"></div>
+        <div class="tester-info" id="testerInfo">Enable testing, then press keys on your MK61.</div>
+        <div class="tester-legend">Green = key registered. This tests what your computer actually receives — including remaps.</div>
+      </div>
+    </section>
+
+    <!-- ============ SETTINGS ============ -->
+    <section id="tab-settings" class="tab" hidden>
+      <div class="tab-head"><h2>Settings</h2></div>
+      <div class="panel">
+        <h3>This profile</h3>
+        <div class="field">
+          <label>Profile name</label>
+          <input type="text" id="optName" maxlength="24" />
+        </div>
+        <div class="field-row">
+          <label class="switch-label"><input type="checkbox" id="optWinLock" /> Win Lock (disable Windows key)</label>
+          <label class="switch-label"><input type="checkbox" id="optDirection" /> Transposed arrows (FN layer)</label>
+        </div>
+        <div class="field">
+          <label>Poll rate <span class="sub">experimental: 1–4 (see docs)</span></label>
+          <select id="optRate">
+            <option value="0">Keep keyboard's current setting</option>
+            <option value="1">1</option><option value="2">2</option>
+            <option value="3">3</option><option value="4">4</option>
+          </select>
+        </div>
+        <div class="field-row">
+          <button id="profileResetBtn">Reset profile to defaults</button>
+          <button id="profileExportBtn">Export profile…</button>
+          <button id="profileImportBtn">Import profile…</button>
+        </div>
+
+        <h3>App</h3>
+        <div class="field-row">
+          <label class="switch-label" id="optAutostartRow"><input type="checkbox" id="optAutostart" /> Start with Windows</label>
+          <label class="switch-label"><input type="checkbox" id="optAutoApply" /> Re-apply profile when the app starts (fixes settings lost after reboot)</label>
+        </div>
+        <div class="field-row">
+          <button id="factoryResetBtn" class="danger">Factory reset keyboard</button>
+        </div>
+        <p class="hint">Settings live in the keyboard itself. "Re-apply on start" additionally pushes your saved profile every time the app launches, so even a reboot can't revert your layout.</p>
+        <p class="hint" id="configPathHint"></p>
+      </div>
+    </section>
+  </main>
+
+  <div id="toast" class="toast" hidden></div>
+  <input type="file" id="fileInput" accept="application/json" hidden />
+
+  <script src="js/keycodes.js"></script>
+  <script src="js/layout.js"></script>
+  <script src="js/protocol.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

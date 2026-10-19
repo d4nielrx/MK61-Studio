@@ -1,0 +1,8 @@
+# Normalise line endings: LF everywhere in the repo, so the shell scripts and
+# the GitHub Actions workflow behave identically on Windows, macOS and Linux.
+* text=auto eol=lf
+
+# Windows-only scripts are the exception - they read better with CRLF.
+*.ps1 text eol=crlf
+*.bat text eol=crlf
+*.cmd text eol=crlf
