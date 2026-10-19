@@ -6,6 +6,27 @@
 - Remap persistence across reboot: NOT yet user-tested (apply path now proven, so
   a remap test is low-risk whenever the user wants it).
 
+## SESSION 9 — PUBLISHED TO GITHUB
+
+- Repo: **https://github.com/d4nielrx/MK61-Studio** (public, MIT).
+  GitHub replaces spaces in repo names with hyphens, so "MK61 Studio" -> "MK61-Studio".
+- Release **v1.0.0**: https://github.com/d4nielrx/MK61-Studio/releases/tag/v1.0.0
+  with the Windows installer, the Windows portable build and the Linux tar.gz.
+- .gitignore keeps the vendor's official Gamakay app + installer (300+ MB,
+  not redistributable) out of the repo. The re/ probe scripts ARE committed -
+  they document how the protocol was reverse-engineered.
+- .gitattributes forces LF in the repo, so build-mac.sh keeps a working shebang
+  on macOS and the CI workflow behaves identically everywhere.
+- Commit identity: d4nielrx <d4nielrx@users.noreply.github.com>.
+- GOTCHA: pushing a workflow file needs the `workflow` OAuth scope -
+  `gh auth refresh -h github.com -s workflow` (device-code flow) adds it.
+- CI (GitHub Actions) builds win+mac+linux and attaches them to the release.
+  On this account the runs sat "queued" forever because Actions had never been
+  activated at the ACCOUNT level (the other repo has 0 runs) - fix in
+  Settings -> Actions -> General -> "Enable actions", and/or
+  Settings -> Billing and licensing (spending limit / payment method).
+  Until then, the Mac build script produces the macOS + Linux installers.
+
 ## SESSION 8 — PACKAGING (Windows + macOS installers)
 
 ### Windows (built here, working)
